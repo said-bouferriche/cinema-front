@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row m-4">
+    <div class="col-md-4">
+      <ul class="list-group" *ngIf="villes">
+        <li [ngClass]="v==currentVille?'active':''" class="list-group-item stretched-link"
+            *ngFor="let v of villes._embedded.villes" (click)="onGetCinemas(v)">
+          {{v.name}}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <nav class="nav nav-pills nav-justified" *ngIf="cinemas">
+        <a class="nav-link" type="button" aria-current="page" [ngClass]="c==currentCinema?'active':''"
+           *ngFor="let c of cinemas._embedded.cinemas" (click)="onGetSalles(c)">{{c.name}}</a>
+      </nav>
+
+
+      <div class="row row-cols-1 row-cols-md-2 g-4" *ngIf="salles">
+        <div class="col" *ngFor="let s of salles._embedded.salles" (click)="OnGetProjections(s)">
+          <div class="card" *ngIf="s.projections">
+            <div class="card-header">{{s.name}} : {{s.projections._embedded.projections[0].film.titre}}</div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <img src="{{cinemaService.host+'/listfilms/'+s.projections._embedded.projections[0].film.id}}"
+                       class="card-img-top thumbnail" alt="can't display image" >
+                </div>
+
+
+
+
+
+<!--                <div class="col-md-6" *ngFor="let p of projections.film">-->
+                <div class="col-md-6">
+                  <ul class="list-group">
+                    <li class="list-group-item"> Séances </li>
+                    <li *ngFor="let p of s.projections._embedded.projections" class="list-group-item">
+                      {{p.seance.heureDebut}}
+                    </li>
+                  </ul>
+                </div>
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+                content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  </div>
+
+</div>
